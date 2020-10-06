@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.16: http://docutils.sourceforge.net/" />
+<title>NBI quasi-mapping RNA-seq paired-end pipeline</title>
+<style type="text/css">
+
+body {
+    color: rgb(51, 51, 51);
+    font-size: 10pt;
+    padding-top: 10px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+h1 {
+    font-size: 150%;
+}
+
+h2 {
+    font-size: 140%;
+}
+
+h3 {
+    font-size: 130%;
+}
+
+h4 {
+    font-size: 120%;
+}
+
+h5 {
+    font-size: 110%;
+}
+
+h6 {
+    font-size: 100%;
+}
+
+div#attachments {
+    display: inline-block;
+    color: gray;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 4px 4px 4px 4px;
+    padding: 0px;
+}
+
+div#attachments dt {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+div#attachments dd p {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+div#attachments :target dt {
+    font-weight: bold;
+}
+
+div#attachments :target a {
+    color: rgb(70, 136, 71);
+}
+
+
+h1.title {
+    text-align: center;
+    font-size: 180%;
+}
+
+div.document {
+    position: relative;
+    background: white;
+    max-width: 2500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px 4px 4px 4px;
+}
+
+div.document:after {
+    content: "CIRC NBI snakemake report";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    padding: 3px 7px;
+    background-color: #f5f5f5;
+    border: 1px solid rgb(221, 221, 221);
+    color: #075117;
+    font-weight: bold;
+    font-size: 15pt;
+    border-radius: 0 0 0 4px;
+}
+
+div.document p {
+    text-align: justify;
+}
+
+div#metadata {
+    text-align: right;
+}
+
+table.docutils {
+    border: none;
+    border-collapse: collapse;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    text-align: center;
+}
+
+table.docutils th {
+    border: none;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    padding: 5px;
+}
+
+table.docutils td {
+    border: none;
+    padding: 5px;
+}
+
+table.docutils th:last-child, td:last-child {
+    text-align: left;
+}
+
+table.docutils th:first-child, td:first-child {
+    text-align: right;
+}
+
+table.docutils th:only-child, td:only-child {
+    text-align: center;
+}
+
+table.docutils.footnote {
+    border: none;
+    text-align: left;
+}
+
+a {
+    color: rgb(0, 136, 204);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(0, 85, 128);
+    text-decoration: underline;
+}
+
+
+div.figure {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+img {
+    max-width: 100%;
+}
+
+p.caption {
+    font-style: italic;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="nbi-quasi-mapping-rna-seq-paired-end-pipeline">
+<h1 class="title">NBI quasi-mapping RNA-seq paired-end pipeline</h1>
+
+<p>NBI pipeline release: v1.3.1</p>
+<p>A pipeline built with snakemake 5.9.1</p>
+<div class="section" id="configuration">
+<h1>Configuration:</h1>
+<p>The input paired-end FASTQ files were processed with the following pipeline:</p>
+<ol class="arabic simple">
+<li>Pre-trimming QC with FastQC (version build within trim-galore=0.4.5)</li>
+<li>Trimming of low quality bases (Phred score &lt;20) and Illumina adapter with trim-galore=0.4.5</li>
+<li>Post-trimming QC with FastQC</li>
+<li>Quasi-mapping with salmon=0.12.0. The transcriptome utilized was: <tt class="docutils literal">/data/project/ctstackhlab/transcriptome_reference/gencode_hg38_GRCh38.p12/release_31/gencode.v31.transcripts.fa</tt></li>
+<li>Generation of the <tt class="docutils literal">tx2gene</tt> table from a TxDB object with bioconductor-genomicfeatures=1.32.3 (R version: r-base=3.4.1).</li>
+</ol>
+<p>The <tt class="docutils literal">tx2gene</tt> table may be used with the R package <tt class="docutils literal">tximport</tt>. The GTF file utilized to produce was: <tt class="docutils literal">/data/project/ctstackhlab/transcriptome_reference/gencode_hg38_GRCh38.p12/release_31/GTF/gencode.v31.annotation.gtf</tt></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="results">
+<h1>Results:</h1>
+<p>The resulting files and paths described below are relative to <tt class="docutils literal"><span class="pre">/data/project/ctstackhlab/projects/TCGA_matched_version_re_analysis/NBI_quasi_mapping_RNA-seq_pipeline-v1.3.1</span></tt></p>
+<ol class="arabic simple">
+<li>MultiQC report with the aggregation of results from the pipeline (excluding post-trim QC): <tt class="docutils literal">MultiQC/RNA_Pipeline_multiqc_report.html</tt></li>
+<li>MultiQC report of post-trim QC: <tt class="docutils literal">MultiQC/Post_trim_multiqc_report.html</tt></li>
+<li>tx2gene table in: <tt class="docutils literal">R/GenomicFeatures/tx2gene.csv</tt></li>
+<li><dl class="first docutils">
+<dt>quant.sf files in <tt class="docutils literal">Salmon_output/quant_files_compilation</tt>:</dt>
+<dd><ul class="first last">
+<li>TCGAFQ_100_quant.sf TCGAFQ_101_quant.sf TCGAFQ_102_quant.sf TCGAFQ_103_quant.sf TCGAFQ_104_quant.sf TCGAFQ_105_quant.sf TCGAFQ_106_quant.sf TCGAFQ_107_quant.sf TCGAFQ_108_quant.sf TCGAFQ_109_quant.sf TCGAFQ_10_quant.sf TCGAFQ_110_quant.sf TCGAFQ_111_quant.sf TCGAFQ_112_quant.sf TCGAFQ_113_quant.sf TCGAFQ_114_quant.sf TCGAFQ_115_quant.sf TCGAFQ_116_quant.sf TCGAFQ_117_quant.sf TCGAFQ_118_quant.sf TCGAFQ_119_quant.sf TCGAFQ_11_quant.sf TCGAFQ_120_quant.sf TCGAFQ_121_quant.sf TCGAFQ_122_quant.sf TCGAFQ_123_quant.sf TCGAFQ_124_quant.sf TCGAFQ_125_quant.sf TCGAFQ_126_quant.sf TCGAFQ_127_quant.sf TCGAFQ_128_quant.sf TCGAFQ_129_quant.sf TCGAFQ_12_quant.sf TCGAFQ_130_quant.sf TCGAFQ_131_quant.sf TCGAFQ_132_quant.sf TCGAFQ_133_quant.sf TCGAFQ_134_quant.sf TCGAFQ_135_quant.sf TCGAFQ_136_quant.sf TCGAFQ_137_quant.sf TCGAFQ_138_quant.sf TCGAFQ_139_quant.sf TCGAFQ_13_quant.sf TCGAFQ_140_quant.sf TCGAFQ_141_quant.sf TCGAFQ_142_quant.sf TCGAFQ_143_quant.sf TCGAFQ_144_quant.sf TCGAFQ_145_quant.sf TCGAFQ_146_quant.sf TCGAFQ_147_quant.sf TCGAFQ_148_quant.sf TCGAFQ_149_quant.sf TCGAFQ_14_quant.sf TCGAFQ_150_quant.sf TCGAFQ_151_quant.sf TCGAFQ_152_quant.sf TCGAFQ_153_quant.sf TCGAFQ_154_quant.sf TCGAFQ_155_quant.sf TCGAFQ_156_quant.sf TCGAFQ_157_quant.sf TCGAFQ_158_quant.sf TCGAFQ_159_quant.sf TCGAFQ_15_quant.sf TCGAFQ_160_quant.sf TCGAFQ_161_quant.sf TCGAFQ_162_quant.sf TCGAFQ_163_quant.sf TCGAFQ_164_quant.sf TCGAFQ_165_quant.sf TCGAFQ_166_quant.sf TCGAFQ_167_quant.sf TCGAFQ_168_quant.sf TCGAFQ_169_quant.sf TCGAFQ_16_quant.sf TCGAFQ_170_quant.sf TCGAFQ_171_quant.sf TCGAFQ_172_quant.sf TCGAFQ_173_quant.sf TCGAFQ_174_quant.sf TCGAFQ_175_quant.sf TCGAFQ_17_quant.sf TCGAFQ_18_quant.sf TCGAFQ_19_quant.sf TCGAFQ_1_quant.sf TCGAFQ_20_quant.sf TCGAFQ_21_quant.sf TCGAFQ_22_quant.sf TCGAFQ_23_quant.sf TCGAFQ_24_quant.sf TCGAFQ_25_quant.sf TCGAFQ_26_quant.sf TCGAFQ_27_quant.sf TCGAFQ_28_quant.sf TCGAFQ_29_quant.sf TCGAFQ_2_quant.sf TCGAFQ_30_quant.sf TCGAFQ_31_quant.sf TCGAFQ_32_quant.sf TCGAFQ_33_quant.sf TCGAFQ_34_quant.sf TCGAFQ_35_quant.sf TCGAFQ_36_quant.sf TCGAFQ_37_quant.sf TCGAFQ_38_quant.sf TCGAFQ_39_quant.sf TCGAFQ_3_quant.sf TCGAFQ_40_quant.sf TCGAFQ_41_quant.sf TCGAFQ_42_quant.sf TCGAFQ_43_quant.sf TCGAFQ_44_quant.sf TCGAFQ_45_quant.sf TCGAFQ_46_quant.sf TCGAFQ_47_quant.sf TCGAFQ_48_quant.sf TCGAFQ_49_quant.sf TCGAFQ_4_quant.sf TCGAFQ_50_quant.sf TCGAFQ_51_quant.sf TCGAFQ_52_quant.sf TCGAFQ_53_quant.sf TCGAFQ_54_quant.sf TCGAFQ_55_quant.sf TCGAFQ_56_quant.sf TCGAFQ_57_quant.sf TCGAFQ_58_quant.sf TCGAFQ_59_quant.sf TCGAFQ_5_quant.sf TCGAFQ_60_quant.sf TCGAFQ_61_quant.sf TCGAFQ_62_quant.sf TCGAFQ_63_quant.sf TCGAFQ_64_quant.sf TCGAFQ_65_quant.sf TCGAFQ_66_quant.sf TCGAFQ_67_quant.sf TCGAFQ_68_quant.sf TCGAFQ_69_quant.sf TCGAFQ_6_quant.sf TCGAFQ_70_quant.sf TCGAFQ_71_quant.sf TCGAFQ_72_quant.sf TCGAFQ_73_quant.sf TCGAFQ_74_quant.sf TCGAFQ_75_quant.sf TCGAFQ_76_quant.sf TCGAFQ_77_quant.sf TCGAFQ_78_quant.sf TCGAFQ_79_quant.sf TCGAFQ_7_quant.sf TCGAFQ_80_quant.sf TCGAFQ_81_quant.sf TCGAFQ_82_quant.sf TCGAFQ_83_quant.sf TCGAFQ_84_quant.sf TCGAFQ_85_quant.sf TCGAFQ_86_quant.sf TCGAFQ_87_quant.sf TCGAFQ_88_quant.sf TCGAFQ_89_quant.sf TCGAFQ_8_quant.sf TCGAFQ_90_quant.sf TCGAFQ_91_quant.sf TCGAFQ_92_quant.sf TCGAFQ_93_quant.sf TCGAFQ_94_quant.sf TCGAFQ_95_quant.sf TCGAFQ_96_quant.sf TCGAFQ_97_quant.sf TCGAFQ_98_quant.sf TCGAFQ_99_quant.sf TCGAFQ_9_quant.sf</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MD5 of quant.sf files in <tt class="docutils literal">Salmon_output/quant_files_compilation</tt>:</dt>
+<dd><ul class="first last">
+<li>TCGAFQ_100_md5sum.txt TCGAFQ_101_md5sum.txt TCGAFQ_102_md5sum.txt TCGAFQ_103_md5sum.txt TCGAFQ_104_md5sum.txt TCGAFQ_105_md5sum.txt TCGAFQ_106_md5sum.txt TCGAFQ_107_md5sum.txt TCGAFQ_108_md5sum.txt TCGAFQ_109_md5sum.txt TCGAFQ_10_md5sum.txt TCGAFQ_110_md5sum.txt TCGAFQ_111_md5sum.txt TCGAFQ_112_md5sum.txt TCGAFQ_113_md5sum.txt TCGAFQ_114_md5sum.txt TCGAFQ_115_md5sum.txt TCGAFQ_116_md5sum.txt TCGAFQ_117_md5sum.txt TCGAFQ_118_md5sum.txt TCGAFQ_119_md5sum.txt TCGAFQ_11_md5sum.txt TCGAFQ_120_md5sum.txt TCGAFQ_121_md5sum.txt TCGAFQ_122_md5sum.txt TCGAFQ_123_md5sum.txt TCGAFQ_124_md5sum.txt TCGAFQ_125_md5sum.txt TCGAFQ_126_md5sum.txt TCGAFQ_127_md5sum.txt TCGAFQ_128_md5sum.txt TCGAFQ_129_md5sum.txt TCGAFQ_12_md5sum.txt TCGAFQ_130_md5sum.txt TCGAFQ_131_md5sum.txt TCGAFQ_132_md5sum.txt TCGAFQ_133_md5sum.txt TCGAFQ_134_md5sum.txt TCGAFQ_135_md5sum.txt TCGAFQ_136_md5sum.txt TCGAFQ_137_md5sum.txt TCGAFQ_138_md5sum.txt TCGAFQ_139_md5sum.txt TCGAFQ_13_md5sum.txt TCGAFQ_140_md5sum.txt TCGAFQ_141_md5sum.txt TCGAFQ_142_md5sum.txt TCGAFQ_143_md5sum.txt TCGAFQ_144_md5sum.txt TCGAFQ_145_md5sum.txt TCGAFQ_146_md5sum.txt TCGAFQ_147_md5sum.txt TCGAFQ_148_md5sum.txt TCGAFQ_149_md5sum.txt TCGAFQ_14_md5sum.txt TCGAFQ_150_md5sum.txt TCGAFQ_151_md5sum.txt TCGAFQ_152_md5sum.txt TCGAFQ_153_md5sum.txt TCGAFQ_154_md5sum.txt TCGAFQ_155_md5sum.txt TCGAFQ_156_md5sum.txt TCGAFQ_157_md5sum.txt TCGAFQ_158_md5sum.txt TCGAFQ_159_md5sum.txt TCGAFQ_15_md5sum.txt TCGAFQ_160_md5sum.txt TCGAFQ_161_md5sum.txt TCGAFQ_162_md5sum.txt TCGAFQ_163_md5sum.txt TCGAFQ_164_md5sum.txt TCGAFQ_165_md5sum.txt TCGAFQ_166_md5sum.txt TCGAFQ_167_md5sum.txt TCGAFQ_168_md5sum.txt TCGAFQ_169_md5sum.txt TCGAFQ_16_md5sum.txt TCGAFQ_170_md5sum.txt TCGAFQ_171_md5sum.txt TCGAFQ_172_md5sum.txt TCGAFQ_173_md5sum.txt TCGAFQ_174_md5sum.txt TCGAFQ_175_md5sum.txt TCGAFQ_17_md5sum.txt TCGAFQ_18_md5sum.txt TCGAFQ_19_md5sum.txt TCGAFQ_1_md5sum.txt TCGAFQ_20_md5sum.txt TCGAFQ_21_md5sum.txt TCGAFQ_22_md5sum.txt TCGAFQ_23_md5sum.txt TCGAFQ_24_md5sum.txt TCGAFQ_25_md5sum.txt TCGAFQ_26_md5sum.txt TCGAFQ_27_md5sum.txt TCGAFQ_28_md5sum.txt TCGAFQ_29_md5sum.txt TCGAFQ_2_md5sum.txt TCGAFQ_30_md5sum.txt TCGAFQ_31_md5sum.txt TCGAFQ_32_md5sum.txt TCGAFQ_33_md5sum.txt TCGAFQ_34_md5sum.txt TCGAFQ_35_md5sum.txt TCGAFQ_36_md5sum.txt TCGAFQ_37_md5sum.txt TCGAFQ_38_md5sum.txt TCGAFQ_39_md5sum.txt TCGAFQ_3_md5sum.txt TCGAFQ_40_md5sum.txt TCGAFQ_41_md5sum.txt TCGAFQ_42_md5sum.txt TCGAFQ_43_md5sum.txt TCGAFQ_44_md5sum.txt TCGAFQ_45_md5sum.txt TCGAFQ_46_md5sum.txt TCGAFQ_47_md5sum.txt TCGAFQ_48_md5sum.txt TCGAFQ_49_md5sum.txt TCGAFQ_4_md5sum.txt TCGAFQ_50_md5sum.txt TCGAFQ_51_md5sum.txt TCGAFQ_52_md5sum.txt TCGAFQ_53_md5sum.txt TCGAFQ_54_md5sum.txt TCGAFQ_55_md5sum.txt TCGAFQ_56_md5sum.txt TCGAFQ_57_md5sum.txt TCGAFQ_58_md5sum.txt TCGAFQ_59_md5sum.txt TCGAFQ_5_md5sum.txt TCGAFQ_60_md5sum.txt TCGAFQ_61_md5sum.txt TCGAFQ_62_md5sum.txt TCGAFQ_63_md5sum.txt TCGAFQ_64_md5sum.txt TCGAFQ_65_md5sum.txt TCGAFQ_66_md5sum.txt TCGAFQ_67_md5sum.txt TCGAFQ_68_md5sum.txt TCGAFQ_69_md5sum.txt TCGAFQ_6_md5sum.txt TCGAFQ_70_md5sum.txt TCGAFQ_71_md5sum.txt TCGAFQ_72_md5sum.txt TCGAFQ_73_md5sum.txt TCGAFQ_74_md5sum.txt TCGAFQ_75_md5sum.txt TCGAFQ_76_md5sum.txt TCGAFQ_77_md5sum.txt TCGAFQ_78_md5sum.txt TCGAFQ_79_md5sum.txt TCGAFQ_7_md5sum.txt TCGAFQ_80_md5sum.txt TCGAFQ_81_md5sum.txt TCGAFQ_82_md5sum.txt TCGAFQ_83_md5sum.txt TCGAFQ_84_md5sum.txt TCGAFQ_85_md5sum.txt TCGAFQ_86_md5sum.txt TCGAFQ_87_md5sum.txt TCGAFQ_88_md5sum.txt TCGAFQ_89_md5sum.txt TCGAFQ_8_md5sum.txt TCGAFQ_90_md5sum.txt TCGAFQ_91_md5sum.txt TCGAFQ_92_md5sum.txt TCGAFQ_93_md5sum.txt TCGAFQ_94_md5sum.txt TCGAFQ_95_md5sum.txt TCGAFQ_96_md5sum.txt TCGAFQ_97_md5sum.txt TCGAFQ_98_md5sum.txt TCGAFQ_99_md5sum.txt TCGAFQ_9_md5sum.txt</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="docutils container" id="metadata">
+Author: Lara Ianov, Ph.D. (<a class="reference external" href="mailto:lianov&#64;uab.edu">lianov&#64;uab.edu</a>) | 2020-09-30</div>
+</div>
+</div>
+</body>
+</html>
